@@ -52,3 +52,43 @@ function doGet() {
     }
   }
   
+  function lookupHarvestData(hgId) {
+    let ws = SpreadsheetApp.getActiveSpreadsheet();
+    let harvestSS = ws.getSheetByName("Harvest Tracking");
+    let rows = harvestSS.getDataRange().getValues();
+  
+    // Trim and normalize the hgId for comparison
+    hgId = hgId.trim().toLowerCase();
+  
+    // Create an array of all hgIDs
+    let hgIdArray = rows.map(row => row[0].trim().toLowerCase());
+  
+    // Find the first occurrence of the hgId in the array
+    let entryRow = hgIdArray.indexOf(hgId);
+  
+    if (entryRow === -1) {
+      // No entry found
+      return null;
+    } else {
+      let harvestData = {
+        harvestdate: rows[entryRow][1],
+        source: rows[entryRow][2],
+        crops: []
+      };
+  
+      // Collect all rows with the same hgId
+      for (let i = entryRow; i < rows.length && rows[i][0].trim().toLowerCase() === hgId; i++) {
+        harvestData.crops.push({
+          crop: rows[i][3],
+          weight: rows[i][4],
+          foodTransformation: rows[i][5],
+          destination: rows[i][6],
+          comments: rows[i][7]
+        });
+      }
+  
+      return harvestData;
+    }
+  }
+  
+  
