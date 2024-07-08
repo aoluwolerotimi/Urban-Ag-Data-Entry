@@ -59,19 +59,19 @@ function doGet() {
   
     // Trim and normalize the hgId for comparison
     hgId = hgId.trim().toLowerCase();
-  
+    Logger.log(`Comparing ${hgId}`);
     // Create an array of all hgIDs
     let hgIdArray = rows.map(row => row[0].trim().toLowerCase());
   
     // Find the first occurrence of the hgId in the array
     let entryRow = hgIdArray.indexOf(hgId);
-  
+    Logger.log(`${entryRow}`);
     if (entryRow === -1) {
       // No entry found
       return null;
     } else {
       let harvestData = {
-        harvestdate: rows[entryRow][1],
+        harvestdate: Utilities.formatDate(rows[entryRow][1], "EST", "yyyy-MM-dd"),
         source: rows[entryRow][2],
         crops: []
       };
@@ -86,9 +86,13 @@ function doGet() {
           comments: rows[i][7]
         });
       }
-  
+    Logger.log(harvestData)
       return harvestData;
     }
+  }
+  
+  function test(){
+    lookupHarvestData("2024-07-01-Evangel")
   }
   
   

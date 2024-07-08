@@ -115,7 +115,7 @@
           harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
         }
       }
-      renderPhase2();
+      renderPhase2(harvestData);
     }
 
     function collectPhase2Data() {
@@ -128,7 +128,7 @@
       renderPhase3();
     }
 
-    function renderPhase2() {
+    function renderPhase2(harvestData) {
       const weightsContainer = document.getElementById('weights-container');
       weightsContainer.innerHTML = '';
       harvestData.crops.forEach((crop, index) => {
@@ -186,10 +186,11 @@
 
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
-      google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
+    google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
     }
 
     function populateForm(data) {
+      console.log(data)
       if (!data) {
         alert('No entry found with the given Harvest Group ID.');
         return;
@@ -210,7 +211,7 @@
         `;
         document.getElementById('crops-container').appendChild(cropDiv);
       });
-      renderPhase2();
+      renderPhase2(data);
       data.crops.forEach((crop, index) => {
         const cropIndex = index + 1;
         document.getElementById(`weight${cropIndex}`).value = crop.weight;
