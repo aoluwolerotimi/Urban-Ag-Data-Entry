@@ -22,24 +22,45 @@
         <label for="source" class="form-label">Source</label>
         <input type="text" class="form-control" id="source">
       </div>
-      <div class="mb-3">
-        <label for="crop" class="form-label">Crop</label>
-        <input type="text" class="form-control" id="crop">
+      <div id="crops-container">
+        <div class="mb-3 crop-entry">
+          <label for="crop1" class="form-label">Crop 1</label>
+          <input type="text" class="form-control" id="crop1">
+        </div>
       </div>
+      <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
       <button class="btn btn-primary" onclick="storeHarvest()">Save</button>
     </div>
   </div>
-<script>
+  <script>
+    let cropCount = 1;
 
-  function storeHarvest(){
-    var harvest={}
-    harvest.harvestdate = document.getElementById("harvestdate").value
-    harvest.source = document.getElementById("source").value
-    harvest.crop = document.getElementById("crop").value
-    google.script.run.storeHarvest(harvest)
-  }
+    function addCrop() {
+      cropCount++;
+      const cropsContainer = document.getElementById('crops-container');
+      const newCropDiv = document.createElement('div');
+      newCropDiv.className = 'mb-3 crop-entry';
+      newCropDiv.innerHTML = `
+        <label for="crop${cropCount}" class="form-label">Crop ${cropCount}</label>
+        <input type="text" class="form-control" id="crop${cropCount}">
+      `;
+      cropsContainer.appendChild(newCropDiv);
+    }
 
-
+    function storeHarvest() {
+      const harvest = {
+        harvestdate: document.getElementById("harvestdate").value,
+        source: document.getElementById("source").value,
+        crops: []
+      };
+      for (let i = 1; i <= cropCount; i++) {
+        const cropValue = document.getElementById(`crop${i}`).value;
+        if (cropValue) {
+          harvest.crops.push(cropValue);
+        }
+      }
+      google.script.run.storeHarvest(harvest);
+    }
   </script>
 </body>
 
