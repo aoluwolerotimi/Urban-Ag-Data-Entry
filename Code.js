@@ -2,7 +2,7 @@ function doGet() {
     return HtmlService.createHtmlOutputFromFile("main");
   }
   
-  function saveHarvestData(uniqueId, harvestData, phase) {
+  function saveHarvestData(hgId, harvestData, phase) {
     let ws = SpreadsheetApp.getActiveSpreadsheet();
     let harvestSS = ws.getSheetByName("Harvest Tracking");
     let rows = harvestSS.getDataRange().getValues();
@@ -10,7 +10,7 @@ function doGet() {
     // Check if entry already exists
     let entryRow = -1;
     for (let i = 0; i < rows.length; i++) {
-      if (rows[i][0] == uniqueId) {
+      if (rows[i][0] == hgId) {
         entryRow = i + 1;
         break;
       }
@@ -20,14 +20,13 @@ function doGet() {
     let dataToSave = [];
     harvestData.crops.forEach((crop, index) => {
       let row = [
-        uniqueId,
+        hgId,
         harvestData.harvestdate,
         harvestData.source,
         crop.crop,
         crop.weight,
         crop.foodTransformation,
         crop.destination,
-        crop.marketDate,
         crop.comments
       ];
       dataToSave.push(row);

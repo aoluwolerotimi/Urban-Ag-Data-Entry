@@ -15,7 +15,7 @@
 
     <!-- Phase 1: Basic Details -->
     <div id="phase-1">
-      <h2>Basic Harvest Details</h2>
+      <h2>Basic Details</h2>
       <div class="mb-3">
         <label for="harvestdate" class="form-label">Harvest date</label>
         <input type="date" class="form-control" id="harvestdate">
@@ -103,7 +103,7 @@
         const crop = document.getElementById(`crop${i}`).value;
         const comments = document.getElementById(`comments${i}`).value;
         if (crop) {
-          harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '', marketDate: '' });
+          harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: ''});
         }
       }
       renderPhase2();
@@ -146,8 +146,6 @@
           <input type="text" class="form-control" id="foodTransformation${cropIndex}">
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
           <input type="text" class="form-control" id="destination${cropIndex}">
-          <label for="marketDate${cropIndex}" class="form-label">Market Date for ${crop.crop}</label>
-          <input type="date" class="form-control" id="marketDate${cropIndex}">
         `;
         additionalDetailsContainer.appendChild(detailsDiv);
       });
@@ -170,12 +168,11 @@
           if (harvestData.crops[i-1]) {
             harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
             harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
-            harvestData.crops[i-1].marketDate = document.getElementById(`marketDate${i}`).value;
           }
         }
       }
-      const uniqueId = harvestData.harvestdate + '-' + harvestData.source;
-      google.script.run.saveHarvestData(uniqueId, harvestData, phase);
+      const hgId = harvestData.harvestdate + '-' + harvestData.source;
+      google.script.run.saveHarvestData(hgId, harvestData, phase);
     }
   </script>
 </body>
