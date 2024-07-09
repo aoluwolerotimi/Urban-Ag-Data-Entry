@@ -110,64 +110,6 @@
       }
     }
 
-// // trying to impose collectAll - AO | Okay, nextphase is working - not anymore. maybe the doublecollectAll?
-//     function nextPhase() {
-//       if (currentPhase === 1) {
-//         if (harvestData.crops.length > 0) {
-//           // If existing data is present, render Phase 2 directly
-//           renderPhase2(harvestData);
-//           showPhase(2);
-//         } else {
-//           collectAllData();
-//           showPhase(2);
-//         }
-//       } else if (currentPhase === 2) {
-//         if (harvestData.crops.some(crop => crop.weight)) {
-//           // If existing data for weights is present, render Phase 3 directly
-//           renderPhase3();
-//           showPhase(3);
-//         } else {
-//           collectAllData();
-//           showPhase(3);
-//         }
-//       }
-//     }
-
-
-    // AO this version of simplifying nextphase didn't work
-    // function nextPhase() {
-    //   collectAllData();
-    //   // console.log(currentPhase);
-    //   if (currentPhase === 1) {
-    //     renderPhase2();
-    //     showPhase(2);
-    //   } else if (currentPhase === 2) {
-    //     renderPhase3();
-    //     showPhase(3);
-    //   }
-    // }
-
-  // neither does this
-    // function nextPhase() {
-    //   collectAllData();  // Ensure all data is collected before moving to the next phase
-      
-    //   if (currentPhase === 1) {
-    //     if (harvestData.crops.length > 0) {
-    //       // If existing data is present, render Phase 2 directly
-    //       renderPhase2();
-    //     }
-    //     showPhase(2);
-    //   } else if (currentPhase === 2) {
-    //     if (harvestData.crops.some(crop => crop.weight)) {
-    //       // If existing data for weights is present, render Phase 3 directly
-    //       renderPhase3();
-    //     }
-    //     showPhase(3);
-    //   }
-    // }
-
-
-
     function previousPhase() {
       if (currentPhase === 2) {
         showPhase(1);
@@ -235,37 +177,6 @@ function collectAllData() {
   }
 }
 
-
-// // most recent collectAll
-//     function collectAllData() {
-//       // Collect data from Phase 1
-//       harvestData.harvestdate = document.getElementById('harvestdate').value;
-//       harvestData.source = document.getElementById('source').value;
-//       harvestData.crops = [];
-//       for (let i = 1; i <= cropCount; i++) {
-//         const crop = document.getElementById(`crop${i}`).value;
-//         const comments = document.getElementById(`comments${i}`).value;
-//         if (crop) {
-//           harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
-//         }
-//       }
-
-//       // Collect data from Phase 2
-//       for (let i = 1; i <= cropCount; i++) {
-//         const weight = document.getElementById(`weight${i}`).value;
-//         if (harvestData.crops[i-1]) {
-//           harvestData.crops[i-1].weight = weight;
-//         }
-//       }
-
-//       // Collect data from Phase 3
-//       for (let i = 1; i <= cropCount; i++) {
-//         if (harvestData.crops[i-1]) {
-//           harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
-//           harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
-//         }
-//       }
-//     }
     
     function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
