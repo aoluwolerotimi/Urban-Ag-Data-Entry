@@ -214,8 +214,15 @@
       collectAllData();
 
       const hgId = harvestData.harvestdate + '-' + harvestData.source;
-      google.script.run.saveHarvestData(hgId, harvestData, phase);
-    }
+      google.script.run
+      .withSuccessHandler(() => {
+      alert('Data saved successfully.');
+    })
+    .saveHarvestData(hgId, harvestData, phase);
+  }
+    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
+    //   google.script.run.saveHarvestData(hgId, harvestData, phase);
+    // }
 
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
