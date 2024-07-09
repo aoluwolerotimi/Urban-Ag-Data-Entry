@@ -70,8 +70,15 @@ function lookupHarvestData(hgId) {
     // No entry found
     return null;
   } else {
+    Logger.log(`Raw date from sheet: ${rows[entryRow][1]}`);
+    let rawDate = new Date(rows[entryRow][1]);
+    Logger.log(`Parsed date: ${rawDate}`);
+    let formattedDate = Utilities.formatDate(rawDate, Session.getScriptTimeZone(), "yyyy-MM-dd");
+    Logger.log(`Formatted date: ${formattedDate}`);
+
     let harvestData = {
-      harvestdate: Utilities.formatDate(rows[entryRow][1], "EST", "yyyy-MM-dd"),
+      // harvestdate: Utilities.formatDate(rows[entryRow][1], "EST", "yyyy-MM-dd"),
+      harvestdate: formattedDate,
       source: rows[entryRow][2],
       crops: []
     };
@@ -86,12 +93,12 @@ function lookupHarvestData(hgId) {
         comments: rows[i][7]
       });
     }
-  // Logger.log(harvestData)
+    Logger.log(harvestData)
     return harvestData;
   }
 }
 
-// function test(){
-//   lookupHarvestData("2024-07-01-Evangel")
-// }
+function test() {
+  lookupHarvestData("2024-07-01-Evangel")
+}
 
