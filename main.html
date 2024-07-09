@@ -66,7 +66,7 @@
   <script>
     let cropCount = 1;
     let currentPhase = 1;
-    const harvestData = {
+    let harvestData = {
       harvestdate: '',
       source: '',
       crops: []
@@ -88,11 +88,23 @@
 
     function nextPhase() {
       if (currentPhase === 1) {
-        collectPhase1Data();
-        showPhase(2);
+        if (harvestData.crops.length > 0) {
+          // If existing data is present, render Phase 2 directly
+          renderPhase2(harvestData);
+          showPhase(2);
+        } else {
+          collectPhase1Data();
+          showPhase(2);
+        }
       } else if (currentPhase === 2) {
-        collectPhase2Data();
-        showPhase(3);
+        if (harvestData.crops.some(crop => crop.weight)) {
+          // If existing data for weights is present, render Phase 3 directly
+          renderPhase3();
+          showPhase(3);
+        } else {
+          collectPhase2Data();
+          showPhase(3);
+        }
       }
     }
 
@@ -115,7 +127,7 @@
           harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
         }
       }
-      renderPhase2(harvestData);
+      renderPhase2();
     }
 
     function collectPhase2Data() {
@@ -128,7 +140,7 @@
       renderPhase3();
     }
 
-    function renderPhase2(harvestData) {
+    function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
       weightsContainer.innerHTML = '';
       harvestData.crops.forEach((crop, index) => {
@@ -137,7 +149,7 @@
         weightDiv.className = 'mb-3';
         weightDiv.innerHTML = `
           <label for="weight${cropIndex}" class="form-label">Weight (g) for ${crop.crop}</label>
-          <input type="number" class="form-control" id="weight${cropIndex}" min="1">
+          <input type="number" class="form-control" id="weight${cropIndex}" min="1" value="${crop.weight || ''}">
         `;
         weightsContainer.appendChild(weightDiv);
       });
@@ -152,9 +164,9 @@
         detailsDiv.className = 'mb-3';
         detailsDiv.innerHTML = `
           <label for="foodTransformation${cropIndex}" class="form-label">Food Transformation for ${crop.crop}</label>
-          <input type="text" class="form-control" id="foodTransformation${cropIndex}">
+          <input type="text" class="form-control" id="foodTransformation${cropIndex}" value="${crop.foodTransformation || ''}">
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
-          <input type="text" class="form-control" id="destination${cropIndex}">
+          <input type="text" class="form-control" id="destination${cropIndex}" value="${crop.destination || ''}">
         `;
         additionalDetailsContainer.appendChild(detailsDiv);
       });
@@ -186,7 +198,7 @@
 
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
-    google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
+      google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
     }
 
     function populateForm(data) {
@@ -211,7 +223,8 @@
         `;
         document.getElementById('crops-container').appendChild(cropDiv);
       });
-      renderPhase2(data);
+      harvestData = data; // Set the retrieved data to harvestData
+      renderPhase2(harvestData);
       data.crops.forEach((crop, index) => {
         const cropIndex = index + 1;
         document.getElementById(`weight${cropIndex}`).value = crop.weight;
