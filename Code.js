@@ -3,6 +3,7 @@ function doGet() {
 }
 
 function saveHarvestData(hgId, harvestData, phase) {
+  Logger.log(phase)
   let ws = SpreadsheetApp.getActiveSpreadsheet();
   let harvestSS = ws.getSheetByName("Harvest Tracking");
   let rows = harvestSS.getDataRange().getValues(); // AO necessary to save all rows like this? why not just the hgID column

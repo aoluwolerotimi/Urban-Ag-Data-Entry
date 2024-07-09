@@ -200,35 +200,72 @@
       renderPhase3();
     }
 
-    function collectAllData() {
-      // Collect data from Phase 1
-      harvestData.harvestdate = document.getElementById('harvestdate').value;
-      harvestData.source = document.getElementById('source').value;
-      harvestData.crops = [];
-      for (let i = 1; i <= cropCount; i++) {
-        const crop = document.getElementById(`crop${i}`).value;
-        const comments = document.getElementById(`comments${i}`).value;
-        if (crop) {
-          harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
-        }
-      }
 
-      // Collect data from Phase 2
-      for (let i = 1; i <= cropCount; i++) {
-        const weight = document.getElementById(`weight${i}`).value;
-        if (harvestData.crops[i-1]) {
-          harvestData.crops[i-1].weight = weight;
-        }
-      }
-
-      // Collect data from Phase 3
-      for (let i = 1; i <= cropCount; i++) {
-        if (harvestData.crops[i-1]) {
-          harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
-          harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
-        }
-      }
+//collectAll that checks if elements exist
+function collectAllData() {
+  // Collect data from Phase 1
+  harvestData.harvestdate = document.getElementById('harvestdate').value;
+  harvestData.source = document.getElementById('source').value;
+  harvestData.crops = [];
+  for (let i = 1; i <= cropCount; i++) {
+    const crop = document.getElementById(`crop${i}`).value;
+    const comments = document.getElementById(`comments${i}`).value;
+    if (crop) {
+      harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
     }
+  }
+
+  // Collect data from Phase 2, if the elements exist
+  for (let i = 1; i <= cropCount; i++) {
+    const weightElement = document.getElementById(`weight${i}`);
+    if (weightElement && harvestData.crops[i-1]) {
+      const weight = weightElement.value;
+      harvestData.crops[i-1].weight = weight;
+    }
+  }
+
+  // Collect data from Phase 3, if the elements exist
+  for (let i = 1; i <= cropCount; i++) {
+    const foodTransformationElement = document.getElementById(`foodTransformation${i}`);
+    const destinationElement = document.getElementById(`destination${i}`);
+    if (foodTransformationElement && destinationElement && harvestData.crops[i-1]) {
+      harvestData.crops[i-1].foodTransformation = foodTransformationElement.value;
+      harvestData.crops[i-1].destination = destinationElement.value;
+    }
+  }
+}
+
+
+// // most recent collectAll
+//     function collectAllData() {
+//       // Collect data from Phase 1
+//       harvestData.harvestdate = document.getElementById('harvestdate').value;
+//       harvestData.source = document.getElementById('source').value;
+//       harvestData.crops = [];
+//       for (let i = 1; i <= cropCount; i++) {
+//         const crop = document.getElementById(`crop${i}`).value;
+//         const comments = document.getElementById(`comments${i}`).value;
+//         if (crop) {
+//           harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
+//         }
+//       }
+
+//       // Collect data from Phase 2
+//       for (let i = 1; i <= cropCount; i++) {
+//         const weight = document.getElementById(`weight${i}`).value;
+//         if (harvestData.crops[i-1]) {
+//           harvestData.crops[i-1].weight = weight;
+//         }
+//       }
+
+//       // Collect data from Phase 3
+//       for (let i = 1; i <= cropCount; i++) {
+//         if (harvestData.crops[i-1]) {
+//           harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
+//           harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
+//         }
+//       }
+//     }
     
     function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
@@ -280,10 +317,6 @@
     })
     .saveHarvestData(hgId, harvestData, phase);
     }
-    
-    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
-    //   google.script.run.saveHarvestData(hgId, harvestData, phase);
-    // }
 
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
