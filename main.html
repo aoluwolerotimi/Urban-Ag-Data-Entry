@@ -140,6 +140,36 @@
       renderPhase3();
     }
 
+    function collectAllData() {
+      // Collect data from Phase 1
+      harvestData.harvestdate = document.getElementById('harvestdate').value;
+      harvestData.source = document.getElementById('source').value;
+      harvestData.crops = [];
+      for (let i = 1; i <= cropCount; i++) {
+        const crop = document.getElementById(`crop${i}`).value;
+        const comments = document.getElementById(`comments${i}`).value;
+        if (crop) {
+          harvestData.crops.push({ crop, comments, weight: '', foodTransformation: '', destination: '' });
+        }
+      }
+
+      // Collect data from Phase 2
+      for (let i = 1; i <= cropCount; i++) {
+        const weight = document.getElementById(`weight${i}`).value;
+        if (harvestData.crops[i-1]) {
+          harvestData.crops[i-1].weight = weight;
+        }
+      }
+
+      // Collect data from Phase 3
+      for (let i = 1; i <= cropCount; i++) {
+        if (harvestData.crops[i-1]) {
+          harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
+          harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
+        }
+      }
+    }
+
     function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
       weightsContainer.innerHTML = '';
@@ -180,18 +210,9 @@
     }
 
     function savePhase(phase) {
-      if (phase === 1) {
-        collectPhase1Data();
-      } else if (phase === 2) {
-        collectPhase2Data();
-      } else if (phase === 3) {
-        for (let i = 1; i <= cropCount; i++) {
-          if (harvestData.crops[i-1]) {
-            harvestData.crops[i-1].foodTransformation = document.getElementById(`foodTransformation${i}`).value;
-            harvestData.crops[i-1].destination = document.getElementById(`destination${i}`).value;
-          }
-        }
-      }
+      // Collect all data from all phases
+      collectAllData();
+
       const hgId = harvestData.harvestdate + '-' + harvestData.source;
       google.script.run.saveHarvestData(hgId, harvestData, phase);
     }
@@ -202,7 +223,7 @@
     }
 
     function populateForm(data) {
-      console.log(data)
+      console.log(data);
       if (!data) {
         alert('No entry found with the given Harvest Group ID.');
         return;

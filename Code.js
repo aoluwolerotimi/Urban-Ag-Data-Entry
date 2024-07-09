@@ -101,4 +101,3 @@ function lookupHarvestData(hgId) {
 function test() {
   lookupHarvestData("2024-07-01-Evangel")
 }
-
