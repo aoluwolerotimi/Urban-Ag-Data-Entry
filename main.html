@@ -35,6 +35,7 @@
       </div>
       <div id="crops-container">
         <div class="crop-entry mb-3">
+          <!-- AO Are the buttons part of crops-container or separate? -->
           <label for="crop1" class="form-label">Crop 1</label>
           <input type="text" class="form-control" id="crop1">
           <label for="comments1" class="form-label">Comments</label>
@@ -86,6 +87,30 @@
       cropsContainer.appendChild(newCropDiv);
     }
 
+// this is what's working for the continue button but not saving properly
+    // function nextPhase() {
+    //   if (currentPhase === 1) {
+    //     if (harvestData.crops.length > 0) {
+    //       // If existing data is present, render Phase 2 directly
+    //       renderPhase2(harvestData);
+    //       showPhase(2);
+    //     } else {
+    //       collectPhase1Data();
+    //       showPhase(2);
+    //     }
+    //   } else if (currentPhase === 2) {
+    //     if (harvestData.crops.some(crop => crop.weight)) {
+    //       // If existing data for weights is present, render Phase 3 directly
+    //       renderPhase3();
+    //       showPhase(3);
+    //     } else {
+    //       collectPhase2Data();
+    //       showPhase(3);
+    //     }
+    //   }
+    // }
+
+// trying to impose collectAll - AO | Okay, nextphase is working
     function nextPhase() {
       if (currentPhase === 1) {
         if (harvestData.crops.length > 0) {
@@ -93,7 +118,7 @@
           renderPhase2(harvestData);
           showPhase(2);
         } else {
-          collectPhase1Data();
+          collectAllData();
           showPhase(2);
         }
       } else if (currentPhase === 2) {
@@ -102,11 +127,46 @@
           renderPhase3();
           showPhase(3);
         } else {
-          collectPhase2Data();
+          collectAllData();
           showPhase(3);
         }
       }
     }
+
+
+    // AO this version of simplifying nextphase didn't work
+    // function nextPhase() {
+    //   collectAllData();
+    //   // console.log(currentPhase);
+    //   if (currentPhase === 1) {
+    //     renderPhase2();
+    //     showPhase(2);
+    //   } else if (currentPhase === 2) {
+    //     renderPhase3();
+    //     showPhase(3);
+    //   }
+    // }
+
+  // neither does this
+    // function nextPhase() {
+    //   collectAllData();  // Ensure all data is collected before moving to the next phase
+      
+    //   if (currentPhase === 1) {
+    //     if (harvestData.crops.length > 0) {
+    //       // If existing data is present, render Phase 2 directly
+    //       renderPhase2();
+    //     }
+    //     showPhase(2);
+    //   } else if (currentPhase === 2) {
+    //     if (harvestData.crops.some(crop => crop.weight)) {
+    //       // If existing data for weights is present, render Phase 3 directly
+    //       renderPhase3();
+    //     }
+    //     showPhase(3);
+    //   }
+    // }
+
+
 
     function previousPhase() {
       if (currentPhase === 2) {
@@ -169,25 +229,25 @@
         }
       }
     }
-
+    
     function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
-      weightsContainer.innerHTML = '';
+      weightsContainer.innerHTML = ''; 
       harvestData.crops.forEach((crop, index) => {
         const cropIndex = index + 1;
         const weightDiv = document.createElement('div');
         weightDiv.className = 'mb-3';
-        weightDiv.innerHTML = `
+        weightDiv.innerHTML = ` 
           <label for="weight${cropIndex}" class="form-label">Weight (g) for ${crop.crop}</label>
           <input type="number" class="form-control" id="weight${cropIndex}" min="1" value="${crop.weight || ''}">
-        `;
+        `; // checks if data already exists. If so, inserts it. Else, inserts empty string
         weightsContainer.appendChild(weightDiv);
-      });
+      }); 
     }
 
     function renderPhase3() {
       const additionalDetailsContainer = document.getElementById('additional-details-container');
-      additionalDetailsContainer.innerHTML = '';
+      additionalDetailsContainer.innerHTML = ''; 
       harvestData.crops.forEach((crop, index) => {
         const cropIndex = index + 1;
         const detailsDiv = document.createElement('div');
@@ -207,7 +267,7 @@
       document.getElementById('phase-1').classList.toggle('hidden', phase !== 1);
       document.getElementById('phase-2').classList.toggle('hidden', phase !== 2);
       document.getElementById('phase-3').classList.toggle('hidden', phase !== 3);
-    }
+    } // AO where does the population for existing entries come in? mb we only call this for fresh entries
 
     function savePhase(phase) {
       // Collect all data from all phases
@@ -219,7 +279,8 @@
       alert('Data saved successfully.');
     })
     .saveHarvestData(hgId, harvestData, phase);
-  }
+    }
+    
     //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
     //   google.script.run.saveHarvestData(hgId, harvestData, phase);
     // }
@@ -227,7 +288,7 @@
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
       google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
-    }
+    } // AO if populateForm is called only when data returned, does null count as data? otheriwse how is null alert triggered?
 
     function populateForm(data) {
       console.log(data);
