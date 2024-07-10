@@ -100,17 +100,17 @@ function lookupHarvestData(hgId) {
 }
 
 
-function checkHgIdExists(hgId) {
-  let ws = SpreadsheetApp.getActiveSpreadsheet();
-  let harvestSS = ws.getSheetByName("Harvest Tracking");
-  let hgIdColumn = harvestSS.getRange(1, 1, harvestSS.getLastRow(), 1).getValues();
+// function checkHgIdExists(hgId) {
+//   let ws = SpreadsheetApp.getActiveSpreadsheet();
+//   let harvestSS = ws.getSheetByName("Harvest Tracking");
+//   let hgIdColumn = harvestSS.getRange(1, 1, harvestSS.getLastRow(), 1).getValues();
 
-  // Trim and normalize the hgId for comparison
-  hgId = hgId.trim().toLowerCase();
+//   // Trim and normalize the hgId for comparison
+//   hgId = hgId.trim().toLowerCase();
 
-  // Create an array of all hgIDs
-  let hgIdArray = hgIdColumn.map(row => row[0].trim().toLowerCase());
+//   // Create an array of all hgIDs
+//   let hgIdArray = hgIdColumn.map(row => row[0].trim().toLowerCase());
 
-  // Check if the hgId exists in the array
-  return hgIdArray.includes(hgId);
-}
+//   // Check if the hgId exists in the array
+//   return hgIdArray.includes(hgId);
+// }
