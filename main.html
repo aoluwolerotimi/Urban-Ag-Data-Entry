@@ -22,7 +22,7 @@
     <h1>Innovation Jeunes Onsite Harvest Tracking</h1>
 
 
-    <!-- Phase 1: Basic Details w 2 field lookup. now working after addressing misplaced div -->
+    <!-- Phase 1: Basic Details -->
     <div id="phase-1">
       <h2>Basic Details</h2>
       <div class="mb-3">
@@ -77,49 +77,6 @@
       <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
     </div>
-
-
-
-<!-- Phase 1 before making lookup be with two fields  -->
-    <!-- Phase 1: Basic Details -->
-    <!-- <div id="phase-1">
-      <h2>Basic Details</h2>
-      <div class="mb-3">
-        <label for="lookup-hgid" class="form-label">Enter Harvest Group ID to Edit</label>
-        <input type="text" class="form-control" id="lookup-hgid">
-        <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button>
-      </div>
-      <div class="mb-3">
-        <label for="harvestdate" class="form-label">Harvest date*</label>
-        <input type="date" class="form-control" id="harvestdate" required>
-      </div>
-      <div class="mb-3">
-        <label for="source" class="form-label">Source*</label>
-        <select class="form-control" id="source" required>
-          <option value="" disabled selected class = "greyed-out">Select Source</option>
-          <option value="Cabot">Cabot</option>
-          <option value="Cathedrale">Cathedrale</option>
-          <option value="Concordia">Concordia</option>
-          <option value="Delta">Delta</option>
-          <option value="Evangel">Evangel</option>
-          <option value="Hawarden">Hawarden</option>
-          <option value="NWSM">NWSM</option>
-          <option value="Versailles">Versailles</option>
-          <option value="Unrecorded">Unrecorded</option>
-        </select>
-      </div>
-      <div id="crops-container">
-        <div class="crop-entry mb-3">
-          <label for="crop1" class="form-label">Crop 1</label>
-          <input type="text" class="form-control" id="crop1">
-          <label for="comments1" class="form-label">Comments</label>
-          <input type="text" class="form-control" id="comments1">
-        </div>
-      </div>
-      <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
-    </div> -->
 
     <!-- Phase 2: Weight Details -->
     <div id="phase-2" class="hidden">
@@ -293,7 +250,18 @@ function collectAllData() {
             <option value="Unspecified" ${crop.foodTransformation === "Unspecified" ? "selected" : ""}>Unspecified</option>
           </select>
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
-          <input type="text" class="form-control" id="destination${cropIndex}" value="${crop.destination || ''}">
+          <select class="form-control" id="destination${cropIndex}">
+            <option value="" disabled selected class="greyed-out">Select Destination</option>
+            <option value="Innov. Assistance (IA)" ${crop.destination === "Innov. Assistance (IA)" ? "selected" : ""}>Innov. Assistance (IA)</option>
+            <option value="Food Transformation" ${crop.destination === "Food Transformation" ? "selected" : ""}>Food Transformation</option>
+            <option value="NWSM" ${crop.destination === "NWSM" ? "selected" : ""}>NWSM</option>
+            <option value="Summit" ${crop.destination === "Summit" ? "selected" : ""}>Summit</option>
+            <option value="Evangel" ${crop.destination === "Evangel" ? "selected" : ""}>Evangel</option>
+            <option value="Volunteer/ Intern" ${crop.destination === "Volunteer/ Intern" ? "selected" : ""}>Volunteer/ Intern</option>
+            <option value="Gift" ${crop.destination === "Gift" ? "selected" : ""}>Gift</option>
+            <option value="Urban Agric. (UA)" ${crop.destination === "Urban Agric. (UA)" ? "selected" : ""}>Urban Agric. (UA)</option>
+            <option value="Unrecorded" ${crop.destination === "Unrecorded" ? "selected" : ""}>Unrecorded</option>
+          </select>
         `;
         additionalDetailsContainer.appendChild(detailsDiv);
       });
@@ -319,7 +287,7 @@ function collectAllData() {
     .saveHarvestData(hgId, harvestData, phase);
     }
 
-// dynamic concatenation version that is now working
+
     function lookupEntry() {
       const lookupDate = document.getElementById('lookup-date').value;
       const lookupSource = document.getElementById('lookup-source').value;
@@ -335,11 +303,6 @@ function collectAllData() {
       google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
     }
 
-// // from when ID came in concatenated already
-//     function lookupEntry() {
-//       const hgId = document.getElementById('lookup-hgid').value;
-//       google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
-//     } 
 
     function populateForm(data) {
       console.log(data);
