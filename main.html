@@ -95,6 +95,7 @@
           <option value="Delta">Delta</option>
           <option value="Evangel">Evangel</option>
           <option value="Hawarden">Hawarden</option>
+          <option value="Hector-To-Blake (HTB)">Hector-To-Blake (HTB)</option>
           <option value="NWSM">NWSM</option>
           <option value="Versailles">Versailles</option>
           <option value="Unrecorded">Unrecorded</option>
@@ -115,6 +116,7 @@
           <option value="Delta">Delta</option>
           <option value="Evangel">Evangel</option>
           <option value="Hawarden">Hawarden</option>
+          <option value="Hector-To-Blake (HTB)">Hector-To-Blake (HTB)</option>
           <option value="NWSM">NWSM</option>
           <option value="Versailles">Versailles</option>
           <option value="Unrecorded">Unrecorded</option>
@@ -130,8 +132,8 @@
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
       <button class="btn btn-secondary" onclick="removeLastCrop()">Remove Last Crop</button>
-      <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
+      <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
     </div>
 
     <!-- Phase 2: Weight Details -->
@@ -139,8 +141,8 @@
       <h2>Weight Details</h2>
       <div id="weights-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="savePhase(2)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
+      <button class="btn btn-primary" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
     <!-- Phase 3: Additional Details -->
@@ -355,10 +357,13 @@ function collectAllData() {
             <option value="" disabled selected class = "greyed-out">Select Food Transformation</option>
             <option value="None" ${crop.foodTransformation === "None" ? "selected" : ""}>None</option>
             <option value="Catering" ${crop.foodTransformation === "Catering" ? "selected" : ""}>Catering</option>
+            <option value="Seed Saving" ${crop.foodTransformation === "Seed Saving" ? "selected" : ""}>Seed Saving</option>
             <option value="Dried" ${crop.foodTransformation === "Dried" ? "selected" : ""}>Dried</option>
+            <option value="Tea" ${crop.foodTransformation === "Tea" ? "selected" : ""}>Tea</option>
             <option value="Jammed" ${crop.foodTransformation === "Jammed" ? "selected" : ""}>Jammed</option>
             <option value="Pickled" ${crop.foodTransformation === "Pickled" ? "selected" : ""}>Pickled</option>
             <option value="Syrup" ${crop.foodTransformation === "Syrup" ? "selected" : ""}>Syrup</option>
+            <option value="Cobbler" ${crop.foodTransformation === "Cobbler" ? "selected" : ""}>Cobbler</option>
             <option value="Unspecified" ${crop.foodTransformation === "Unspecified" ? "selected" : ""}>Unspecified</option>
           </select>
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
@@ -387,17 +392,30 @@ function collectAllData() {
     } 
 
 
-// before checking to ensure source and date + duplicate check
+    // function savePhase(phase) {
+    //   // Collect all data from all phases
+    //   collectAllData();
+
+    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
+    //   google.script.run
+    //   .withSuccessHandler(() => {
+    //   alert('Data saved. Refresh page to start form again.');
+    // })
+    // .saveHarvestData(hgId, harvestData, phase);
+    // }
+
+// with autorefresh upon saving
     function savePhase(phase) {
       // Collect all data from all phases
       collectAllData();
 
       const hgId = harvestData.harvestdate + '-' + harvestData.source;
       google.script.run
-      .withSuccessHandler(() => {
-      alert('Data saved. Refresh page to start form again.');
-    })
-    .saveHarvestData(hgId, harvestData, phase);
+        .withSuccessHandler(() => {
+          alert('Data saved successfully. The form will terminate once you click ok.');
+          location.reload(); // Reload the page to reset the form
+        })
+        .saveHarvestData(hgId, harvestData, phase);
     }
 
 
