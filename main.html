@@ -10,6 +10,10 @@
     .hidden {
       display: none;
     }
+    .greyed-out {
+      color: grey;
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -31,9 +35,8 @@
       </div>
       <div class="mb-3">
         <label for="source" class="form-label">Source*</label>
-        <!-- <input type="text" class="form-control" id="source" required>  -->
         <select class="form-control" id="source" required>
-          <option value="" disabled selected>Select Source</option>
+          <option value="" disabled selected class = "greyed-out">Select Source</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
           <option value="Concordia">Concordia</option>
@@ -220,7 +223,7 @@ function collectAllData() {
         detailsDiv.innerHTML = `
           <label for="foodTransformation${cropIndex}" class="form-label">Food Transformation for ${crop.crop}</label>
           <select class="form-control" id="foodTransformation${cropIndex}">
-            <option value="" disabled selected>Select Food Transformation</option>
+            <option value="" disabled selected class = "greyed-out">Select Food Transformation</option>
             <option value="None" ${crop.foodTransformation === "None" ? "selected" : ""}>None</option>
             <option value="Catering" ${crop.foodTransformation === "Catering" ? "selected" : ""}>Catering</option>
             <option value="Dried" ${crop.foodTransformation === "Dried" ? "selected" : ""}>Dried</option>
@@ -232,12 +235,6 @@ function collectAllData() {
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
           <input type="text" class="form-control" id="destination${cropIndex}" value="${crop.destination || ''}">
         `;
-        // detailsDiv.innerHTML = `
-        //   <label for="foodTransformation${cropIndex}" class="form-label">Food Transformation for ${crop.crop}</label>
-        //   <input type="text" class="form-control" id="foodTransformation${cropIndex}" value="${crop.foodTransformation || ''}">
-        //   <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
-        //   <input type="text" class="form-control" id="destination${cropIndex}" value="${crop.destination || ''}">
-        // `;
         additionalDetailsContainer.appendChild(detailsDiv);
       });
     }
