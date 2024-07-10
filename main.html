@@ -168,40 +168,6 @@
     }
 
 
-
-
-// // before adding phase 1  check to prevent duplicate IDs
-//     function nextPhase() {
-//       if (currentPhase === 1) {
-//         const harvestDate = document.getElementById('harvestdate').value;
-//         const source = document.getElementById('source').value;
-//         const crop1 = document.getElementById('crop1').value;
-
-//         if (!harvestDate || !source || !crop1) {
-//           alert("Please enter Harvest Date, Source, and at least one Crop.");
-//           return;
-//         }
-
-//         if (harvestData.crops.length > 0) {
-//           // If existing data is present, render Phase 2 directly
-//           renderPhase2(harvestData);
-//           showPhase(2);
-//         } else {
-//           collectPhase1Data();
-//           showPhase(2);
-//         }
-//       } else if (currentPhase === 2) {
-//         if (harvestData.crops.some(crop => crop.weight)) {
-//           // If existing data for weights is present, render Phase 3 directly
-//           renderPhase3();
-//           showPhase(3);
-//         } else {
-//           collectPhase2Data();
-//           showPhase(3);
-//         }
-//       }
-//     }
-
     function previousPhase() {
       if (currentPhase === 2) {
         showPhase(1);
@@ -323,7 +289,6 @@ function collectAllData() {
 
     function showPhase(phase) {
       currentPhase = phase;
-      console.log(currentPhase)
       document.getElementById('phase-1').classList.toggle('hidden', phase !== 1);
       document.getElementById('phase-2').classList.toggle('hidden', phase !== 2);
       document.getElementById('phase-3').classList.toggle('hidden', phase !== 3);
@@ -356,25 +321,10 @@ function savePhase(phase) {
   }).checkHgIdExists(hgId);
 }
 
-// before checking to ensure source and date + duplicate check
-    // function savePhase(phase) {
-    //   // Collect all data from all phases
-    //   collectAllData();
-
-    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
-    //   google.script.run
-    //   .withSuccessHandler(() => {
-    //   alert('Data saved. Refresh page to start form again.');
-    // })
-    // .saveHarvestData(hgId, harvestData, phase);
-    // }
-
 
     function lookupEntry() {
       const lookupDate = document.getElementById('lookup-date').value;
       const lookupSource = document.getElementById('lookup-source').value;
-      console.log(lookupDate);
-      console.log(lookupSource);
 
       if (!lookupDate || !lookupSource) {
         alert('Please enter both the harvest date and source.');
@@ -387,7 +337,6 @@ function savePhase(phase) {
 
 
     function populateForm(data) {
-      console.log(data);
       if (!data) {
         alert('No entry found with the given Harvest Group ID.');
         return;
