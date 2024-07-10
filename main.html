@@ -129,36 +129,78 @@
       cropsContainer.appendChild(newCropDiv);
     }
 
+
+
+// with phase 1  check to prevent duplicate IDs
     function nextPhase() {
-      if (currentPhase === 1) {
-        const harvestDate = document.getElementById('harvestdate').value;
-        const source = document.getElementById('source').value;
-        const crop1 = document.getElementById('crop1').value;
-
-        if (!harvestDate || !source || !crop1) {
-          alert("Please enter Harvest Date, Source, and at least one Crop.");
-          return;
-        }
-
-        if (harvestData.crops.length > 0) {
-          // If existing data is present, render Phase 2 directly
-          renderPhase2(harvestData);
-          showPhase(2);
-        } else {
-          collectPhase1Data();
-          showPhase(2);
-        }
-      } else if (currentPhase === 2) {
-        if (harvestData.crops.some(crop => crop.weight)) {
-          // If existing data for weights is present, render Phase 3 directly
-          renderPhase3();
-          showPhase(3);
-        } else {
-          collectPhase2Data();
-          showPhase(3);
-        }
+      const harvestDate = document.getElementById('harvestdate').value;
+      const source = document.getElementById('source').value;
+      const crop1 = document.getElementById('crop1').value;
+      if (!harvestDate || !source || !crop1) {
+        alert("Please enter Harvest Date, Source, and at least one Crop.");
+        return;
       }
+
+      const hgId = harvestDate + '-' + source;
+      google.script.run.withSuccessHandler((exists) => {
+        if (exists) {
+          alert("Existing entry found for this date and source. Please look it up above to continue editing");
+        } else {
+          if (currentPhase === 1) {
+            if (harvestData.crops.length > 0) {
+              renderPhase2(harvestData);
+              showPhase(2);
+            } else {
+              collectPhase1Data();
+              showPhase(2);
+            }
+          } else if (currentPhase === 2) {
+            if (harvestData.crops.some(crop => crop.weight)) {
+              renderPhase3();
+              showPhase(3);
+            } else {
+              collectPhase2Data();
+              showPhase(3);
+            }
+          }
+        }
+      }).checkHgIdExists(hgId);
     }
+
+
+
+
+// // before adding phase 1  check to prevent duplicate IDs
+//     function nextPhase() {
+//       if (currentPhase === 1) {
+//         const harvestDate = document.getElementById('harvestdate').value;
+//         const source = document.getElementById('source').value;
+//         const crop1 = document.getElementById('crop1').value;
+
+//         if (!harvestDate || !source || !crop1) {
+//           alert("Please enter Harvest Date, Source, and at least one Crop.");
+//           return;
+//         }
+
+//         if (harvestData.crops.length > 0) {
+//           // If existing data is present, render Phase 2 directly
+//           renderPhase2(harvestData);
+//           showPhase(2);
+//         } else {
+//           collectPhase1Data();
+//           showPhase(2);
+//         }
+//       } else if (currentPhase === 2) {
+//         if (harvestData.crops.some(crop => crop.weight)) {
+//           // If existing data for weights is present, render Phase 3 directly
+//           renderPhase3();
+//           showPhase(3);
+//         } else {
+//           collectPhase2Data();
+//           showPhase(3);
+//         }
+//       }
+//     }
 
     function previousPhase() {
       if (currentPhase === 2) {
@@ -287,17 +329,45 @@ function collectAllData() {
       document.getElementById('phase-3').classList.toggle('hidden', phase !== 3);
     } 
 
-    function savePhase(phase) {
+// with checking to ensure source and date + duplicate check
+function savePhase(phase) {
+  const harvestDate = document.getElementById('harvestdate').value;
+  const source = document.getElementById('source').value;
+  const crop1 = document.getElementById('crop1').value;
+
+  if (!harvestDate || !source || !crop1) {
+    alert("Please enter Harvest Date, Source, and at least one Crop.");
+    return;
+  }
+
+  const hgId = harvestDate + '-' + source;
+  google.script.run.withSuccessHandler((exists) => {
+    if (exists) {
+      alert("Existing entry found. Please use the lookup functionality to retrieve and edit the existing data.");
+    } else {
       // Collect all data from all phases
       collectAllData();
-
-      const hgId = harvestData.harvestdate + '-' + harvestData.source;
       google.script.run
-      .withSuccessHandler(() => {
-      alert('Data saved. Refresh page to start form again.');
-    })
-    .saveHarvestData(hgId, harvestData, phase);
+        .withSuccessHandler(() => {
+          alert('Data saved. Refresh page to start form again.');
+        })
+        .saveHarvestData(hgId, harvestData, phase);
     }
+  }).checkHgIdExists(hgId);
+}
+
+// before checking to ensure source and date + duplicate check
+    // function savePhase(phase) {
+    //   // Collect all data from all phases
+    //   collectAllData();
+
+    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
+    //   google.script.run
+    //   .withSuccessHandler(() => {
+    //   alert('Data saved. Refresh page to start form again.');
+    // })
+    // .saveHarvestData(hgId, harvestData, phase);
+    // }
 
 
     function lookupEntry() {

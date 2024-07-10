@@ -92,7 +92,22 @@ function lookupHarvestData(hgId) {
   }
 }
 
-function test() {
-  lookupHarvestData("2024-07-08-Evangel")
+function checkHgIdExists(hgId) {
+  let ws = SpreadsheetApp.getActiveSpreadsheet();
+  let harvestSS = ws.getSheetByName("Harvest Tracking");
+  let rows = harvestSS.getDataRange().getValues();
+
+  // Trim and normalize the hgId for comparison
+  hgId = hgId.trim().toLowerCase();
+
+  // Create an array of all hgIDs
+  let hgIdArray = rows.map(row => row[0].trim().toLowerCase());
+
+  // Check if the hgId exists in the array
+  return hgIdArray.includes(hgId);
 }
+
+// function test() {
+//   lookupHarvestData("2024-07-08-Evangel")
+// }
 
