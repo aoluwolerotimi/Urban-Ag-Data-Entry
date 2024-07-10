@@ -14,6 +14,9 @@
       color: grey;
       font-style: italic;
     }
+    body {
+      font-size: 1.2rem; 
+    }
     h1 {
       color: #6E4A98;
     }
@@ -25,7 +28,49 @@
       background-color: #563D7C;
       border-color: #563D7C;
     }
+    .container {
+      padding: 15px;
+    }
+    .form-control, .btn {
+      width: 100%;
+    }
+    .mb-3 {
+      margin-bottom: 15px;
+    }
+    .btn {
+      margin-bottom: 15px; 
+    }
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      .container {
+        padding: 5px;
+      }
+    }
   </style>
+
+
+  <!-- <style>
+    .hidden {
+      display: none;
+    }
+    .greyed-out {
+      color: grey;
+      font-style: italic;
+    }
+    h1 {
+      color: #6E4A98;
+    }
+    .btn-primary {
+      background-color: #6E4A98;
+      border-color: #6E4A98;
+    }
+    .btn-primary:hover {
+      background-color: #563D7C;
+      border-color: #563D7C;
+    }
+  </style> -->
 </head>
 
 <body>
@@ -54,7 +99,6 @@
           <option value="Versailles">Versailles</option>
           <option value="Unrecorded">Unrecorded</option>
         </select>
-      <!-- </div> -->
       <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button>
       </div>
       <div class="mb-3">
