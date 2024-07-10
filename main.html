@@ -43,7 +43,7 @@
         </div>
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="savePhase(1)">Save</button>
+      <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
     </div>
 
@@ -52,7 +52,7 @@
       <h2>Weight Details</h2>
       <div id="weights-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="savePhase(2)">Save</button>
+      <button class="btn btn-primary" onclick="savePhase(2)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
     </div>
 
@@ -61,7 +61,7 @@
       <h2>Additional Details</h2>
       <div id="additional-details-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="savePhase(3)">Save</button>
+      <button class="btn btn-primary" onclick="savePhase(3)">Save to Sheet</button>
     </div>
   </div>
   <script>
@@ -143,7 +143,6 @@
     }
 
 
-//collectAll that checks if elements exist
 function collectAllData() {
   // Collect data from Phase 1
   harvestData.harvestdate = document.getElementById('harvestdate').value;
@@ -215,7 +214,7 @@ function collectAllData() {
       document.getElementById('phase-1').classList.toggle('hidden', phase !== 1);
       document.getElementById('phase-2').classList.toggle('hidden', phase !== 2);
       document.getElementById('phase-3').classList.toggle('hidden', phase !== 3);
-    } // AO where does the population for existing entries come in? mb we only call this for fresh entries
+    } 
 
     function savePhase(phase) {
       // Collect all data from all phases
@@ -224,7 +223,7 @@ function collectAllData() {
       const hgId = harvestData.harvestdate + '-' + harvestData.source;
       google.script.run
       .withSuccessHandler(() => {
-      alert('Data saved successfully.');
+      alert('Data saved. Refresh page to start form again.');
     })
     .saveHarvestData(hgId, harvestData, phase);
     }
@@ -232,7 +231,7 @@ function collectAllData() {
     function lookupEntry() {
       const hgId = document.getElementById('lookup-hgid').value;
       google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
-    } // AO if populateForm is called only when data returned, does null count as data? otheriwse how is null alert triggered?
+    } 
 
     function populateForm(data) {
       console.log(data);

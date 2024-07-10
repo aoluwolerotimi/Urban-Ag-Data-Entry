@@ -1,5 +1,5 @@
 function doGet() {
-  return HtmlService.createHtmlOutputFromFile("main");
+  return HtmlService.createHtmlOutputFromFile("harvestMain");
 }
 
 function saveHarvestData(hgId, harvestData, phase) {
@@ -43,14 +43,6 @@ function saveHarvestData(hgId, harvestData, phase) {
     }
   }
 
-  // // Update phase status
-  // if (phase === 1) {
-  //   harvestSS.getRange(entryRow + 1, 10).setValue("Phase 1 Completed"); // AO not sure why this is being done at all 
-  // } else if (phase === 2) {
-  //   harvestSS.getRange(entryRow + 1, 11).setValue("Phase 2 Completed"); // AO check where else the phase object is used
-  // } else if (phase === 3) {
-  //   harvestSS.getRange(entryRow + 1, 12).setValue("Phase 3 Completed");
-  // }
 }
 
 function lookupHarvestData(hgId) {
@@ -95,12 +87,12 @@ function lookupHarvestData(hgId) {
         comments: rows[i][7]
       });
     }
-    // Logger.log(harvestData)
+    Logger.log(harvestData)
     return harvestData;
   }
 }
 
 function test() {
-  lookupHarvestData("2024-07-01-Evangel")
+  lookupHarvestData("2024-07-08-Evangel")
 }
 
