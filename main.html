@@ -20,6 +20,9 @@
     h1 {
       color: #6E4A98;
     }
+    h4 {
+      color: #6E4A98;
+    }
     .btn-primary {
       background-color: #6E4A98;
       border-color: #6E4A98;
@@ -81,12 +84,13 @@
     <!-- Phase 1: Basic Details -->
     <div id="phase-1">
       <h2>Basic Details</h2>
+      <h4>Look Up & Edit Existing Entry</h4>
       <div class="mb-3">
-          <label for="lookup-date" class="form-label">Enter Harvest Date to Find Entries</label>
+          <label for="lookup-date" class="form-label">Enter Harvest Date for Search</label>
           <input type="date" class="form-control" id="lookup-date">
       </div>
       <div class="mb-3">
-        <label for="lookup-source" class="form-label">Select Source to Find Entries</label>
+        <label for="lookup-source" class="form-label">Select Source for Search</label>
         <select class="form-control" id="lookup-source">
           <option value="" disabled selected>Select Source</option>
           <option value="Cabot">Cabot</option>
@@ -102,6 +106,7 @@
         </select>
       <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button>
       </div>
+      <h4>Start New Entry</h4>
       <div class="mb-3">
         <label for="harvestdate" class="form-label">Harvest date*</label>
         <input type="date" class="form-control" id="harvestdate" required>
@@ -192,7 +197,6 @@
       }
     }
 
-// // before adding phase 1  check to prevent duplicate IDs
     function nextPhase() {
       if (currentPhase === 1) {
         const harvestDate = document.getElementById('harvestdate').value;
@@ -223,44 +227,6 @@
         }
       }
     }
-
-
-// // with phase 1  check to prevent duplicate IDs -- not working well, preventing editing at all
-//     function nextPhase() {
-//       const harvestDate = document.getElementById('harvestdate').value;
-//       const source = document.getElementById('source').value;
-//       const crop1 = document.getElementById('crop1').value;
-//       if (!harvestDate || !source || !crop1) {
-//         alert("Please enter Harvest Date, Source, and at least one Crop.");
-//         return;
-//       }
-
-//       const hgId = harvestDate + '-' + source;
-//       google.script.run.withSuccessHandler((exists) => {
-//         if (exists) {
-//           alert("Existing entry found for this date and source. Please look it up above to continue editing");
-//         } else {
-//           if (currentPhase === 1) {
-//             if (harvestData.crops.length > 0) {
-//               renderPhase2(harvestData);
-//               showPhase(2);
-//             } else {
-//               collectPhase1Data();
-//               showPhase(2);
-//             }
-//           } else if (currentPhase === 2) {
-//             if (harvestData.crops.some(crop => crop.weight)) {
-//               renderPhase3();
-//               showPhase(3);
-//             } else {
-//               collectPhase2Data();
-//               showPhase(3);
-//             }
-//           }
-//         }
-//       }).checkHgIdExists(hgId);
-//     }
-
 
     function previousPhase() {
       if (currentPhase === 2) {
@@ -293,7 +259,6 @@
       }
       renderPhase3();
     }
-
 
 function collectAllData() {
   // Collect data from Phase 1
@@ -392,19 +357,8 @@ function collectAllData() {
     } 
 
 
-    // function savePhase(phase) {
-    //   // Collect all data from all phases
-    //   collectAllData();
 
-    //   const hgId = harvestData.harvestdate + '-' + harvestData.source;
-    //   google.script.run
-    //   .withSuccessHandler(() => {
-    //   alert('Data saved. Refresh page to start form again.');
-    // })
-    // .saveHarvestData(hgId, harvestData, phase);
-    // }
-
-// with autorefresh upon saving
+// with forced refresh upon saving
     function savePhase(phase) {
       // Collect all data from all phases
       collectAllData();
@@ -417,34 +371,6 @@ function collectAllData() {
         })
         .saveHarvestData(hgId, harvestData, phase);
     }
-
-
-// // with checking to ensure source and date + duplicate check - not working well, preventing editing existing data at all
-// function savePhase(phase) {
-//   const harvestDate = document.getElementById('harvestdate').value;
-//   const source = document.getElementById('source').value;
-//   const crop1 = document.getElementById('crop1').value;
-
-//   if (!harvestDate || !source || !crop1) {
-//     alert("Please enter Harvest Date, Source, and at least one Crop.");
-//     return;
-//   }
-
-//   const hgId = harvestDate + '-' + source;
-//   google.script.run.withSuccessHandler((exists) => {
-//     if (exists) {
-//       alert("Existing entry found. Please use the lookup functionality to retrieve and edit the existing data.");
-//     } else {
-//       // Collect all data from all phases
-//       collectAllData();
-//       google.script.run
-//         .withSuccessHandler(() => {
-//           alert('Data saved. Refresh page to start form again.');
-//         })
-//         .saveHarvestData(hgId, harvestData, phase);
-//     }
-//   }).checkHgIdExists(hgId);
-// }
 
 
     function lookupEntry() {
