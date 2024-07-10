@@ -129,6 +129,7 @@
         </div>
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
+      <button class="btn btn-secondary" onclick="removeLastCrop()">Remove Last Crop</button>
       <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
     </div>
@@ -171,6 +172,22 @@
         <input type="text" class="form-control" id="comments${cropCount}">
       `;
       cropsContainer.appendChild(newCropDiv);
+    }
+
+    function removeLastCrop() {
+      if (cropCount > 1) {
+        // Remove the last crop entry from the DOM
+        const cropsContainer = document.getElementById('crops-container');
+        cropsContainer.removeChild(cropsContainer.lastElementChild);
+
+        // Remove the last crop entry from the harvestData object
+        harvestData.crops.pop();
+
+        // Decrement the crop count
+        cropCount--;
+      } else {
+        alert('At least one crop entry is required.');
+      }
     }
 
 
