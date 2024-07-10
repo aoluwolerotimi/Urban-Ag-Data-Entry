@@ -14,6 +14,17 @@
       color: grey;
       font-style: italic;
     }
+    h1 {
+      color: #6E4A98;
+    }
+    .btn-primary {
+      background-color: #6E4A98;
+      border-color: #6E4A98;
+    }
+    .btn-primary:hover {
+      background-color: #563D7C;
+      border-color: #563D7C;
+    }
   </style>
 </head>
 
@@ -67,8 +78,8 @@
       </div>
       <div id="crops-container">
         <div class="crop-entry mb-3">
-          <label for="crop1" class="form-label">Crop 1</label>
-          <input type="text" class="form-control" id="crop1">
+          <label for="crop1" class="form-label">Crop 1*</label>
+          <input type="text" class="form-control" id="crop1" required>
           <label for="comments1" class="form-label">Comments</label>
           <input type="text" class="form-control" id="comments1">
         </div>
@@ -122,9 +133,10 @@
       if (currentPhase === 1) {
         const harvestDate = document.getElementById('harvestdate').value;
         const source = document.getElementById('source').value;
+        const crop1 = document.getElementById('crop1').value;
 
-        if (!harvestDate || !source) {
-          alert("Please enter Harvest Date and Source.");
+        if (!harvestDate || !source || !crop1) {
+          alert("Please enter Harvest Date, Source, and at least one Crop.");
           return;
         }
 
