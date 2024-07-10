@@ -26,16 +26,15 @@
         <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button>
       </div>
       <div class="mb-3">
-        <label for="harvestdate" class="form-label">Harvest date</label>
-        <input type="date" class="form-control" id="harvestdate">
+        <label for="harvestdate" class="form-label">Harvest date*</label>
+        <input type="date" class="form-control" id="harvestdate" required>
       </div>
       <div class="mb-3">
-        <label for="source" class="form-label">Source</label>
-        <input type="text" class="form-control" id="source">
+        <label for="source" class="form-label">Source*</label>
+        <input type="text" class="form-control" id="source" required>
       </div>
       <div id="crops-container">
         <div class="crop-entry mb-3">
-          <!-- AO Are the buttons part of crops-container or separate? -->
           <label for="crop1" class="form-label">Crop 1</label>
           <input type="text" class="form-control" id="crop1">
           <label for="comments1" class="form-label">Comments</label>
@@ -87,9 +86,16 @@
       cropsContainer.appendChild(newCropDiv);
     }
 
-
     function nextPhase() {
       if (currentPhase === 1) {
+        const harvestDate = document.getElementById('harvestdate').value;
+        const source = document.getElementById('source').value;
+
+        if (!harvestDate || !source) {
+          alert("Please enter Harvest Date and Source.");
+          return;
+        }
+
         if (harvestData.crops.length > 0) {
           // If existing data is present, render Phase 2 directly
           renderPhase2(harvestData);
