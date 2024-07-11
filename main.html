@@ -31,6 +31,9 @@
       background-color: #563D7C;
       border-color: #563D7C;
     }
+    .btn-bold {
+      font-weight: bold;
+    }
     .container {
       padding: 15px;
     }
@@ -138,7 +141,7 @@
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
       <button class="btn btn-secondary" onclick="removeLastCrop()">Remove Last Crop</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
-      <button class="btn btn-primary" onclick="savePhase(1)">Save to Sheet</button>
+      <button class="btn btn-primary btn-bold" onclick="savePhase(1)">Save to Sheet</button>
     </div>
 
     <!-- Phase 2: Weight Details -->
@@ -147,7 +150,7 @@
       <div id="weights-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
-      <button class="btn btn-primary" onclick="savePhase(2)">Save to Sheet</button>
+      <button class="btn btn-primary btn-bold" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
     <!-- Phase 3: Additional Details -->
@@ -155,7 +158,7 @@
       <h2>Additional Details</h2>
       <div id="additional-details-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="savePhase(3)">Save to Sheet</button>
+      <button class="btn btn-primary btn-bold" onclick="savePhase(3)">Save to Sheet</button>
     </div>
   </div>
   <script>
