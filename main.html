@@ -75,9 +75,9 @@
           <input type="date" class="form-control" id="lookup-date">
       </div>
       <div class="mb-3">
-        <label for="lookup-source" class="form-label">Select Source for Search</label>
+        <label for="lookup-source" class="form-label">Select Source Site for Search</label>
         <select class="form-control" id="lookup-source">
-          <option value="" disabled selected>Select Source</option>
+          <option value="" disabled selected>Select Source Site</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
           <option value="Concordia">Concordia</option>
@@ -100,7 +100,7 @@
       <div class="mb-3">
         <label for="source" class="form-label">Source*</label>
         <select class="form-control" id="source" required>
-          <option value="" disabled selected class = "greyed-out">Select Source</option>
+          <option value="" disabled selected class = "greyed-out">Select Source Site</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
           <option value="Concordia">Concordia</option>
@@ -122,7 +122,7 @@
         </div>
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Record Weight</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Record Weight</button>
       <button class="btn btn-primary btn-bold" onclick="savePhase(1)">Save to Sheet</button>
     </div>
 
@@ -131,7 +131,7 @@
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Record Food Transformation & Destination</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Record Food Transformation & Destination</button>
       <button class="btn btn-primary btn-bold" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
@@ -173,7 +173,7 @@
         const crop1 = document.getElementById('crop1').value;
 
         if (!harvestDate || !source || !crop1) {
-          alert("Please enter Harvest Date, Source, and at least one Crop.");
+          alert("Please enter Harvest Date, Source Site, and at least one Crop.");
           return;
         }
 
@@ -347,7 +347,7 @@ function collectAllData() {
       const lookupSource = document.getElementById('lookup-source').value;
 
       if (!lookupDate || !lookupSource) {
-        alert('Please enter both the harvest date and source.');
+        alert('Please enter both the harvest date and source site.');
         return;
       }
 
@@ -358,7 +358,7 @@ function collectAllData() {
 
     function populateForm(data) {
       if (!data) {
-        alert('No entry found with the given Harvest Group ID.');
+        alert('No entries found for specified Harvest Date and Source Site.');
         return;
       }
       document.getElementById('harvestdate').value = data.harvestdate;
