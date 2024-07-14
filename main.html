@@ -36,21 +36,33 @@
     border-color: #4E3A75;
     }
     .btn-secondary {
-      background-color: #D3BCE6;
-      border-color: #D3BCE6;
-      color: #000000; 
+      background-color: #9B6AB3;
+      border-color: #9B6AB3;
     }
     .btn-secondary:hover {
-      background-color: #C4A5DD;
-      border-color: #C4A5DD;
+      background-color: #8B5DA1;
+      border-color: #8B5DA1;
     }
     .btn-secondary:active {
-      background-color: #B492D2;
-      border-color: #B492D2;
+      background-color: #7A4F8F;
+      border-color: #7A4F8F;
     }
-    .btn-bold {
+    .btn-tertiary {
+      background-color: #E6D3F1;
+      border-color: #E6D3F1;
+      color: #000000;
+    }
+    .btn-tertiary:hover {
+      background-color: #D5BDE6;
+      border-color: #D5BDE6;
+    }
+    .btn-tertiary:active {
+      background-color: #C5A5DD;
+      border-color: #C5A5DD;
+    }
+    /* .btn-bold {
       font-weight: bold;
-    }
+    } */
     .container {
       padding: 15px;
     }
@@ -102,7 +114,8 @@
           <option value="Versailles">Versailles</option>
           <option value="Unrecorded">Unrecorded</option>
         </select>
-      <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button>
+      <!-- <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button> -->
+      <button class="btn btn-secondary mt-3" onclick="lookupEntry()">Lookup</button>
       </div>
       <h2>Start New Entry</h2>
       <h4>Basic Details</h4>
@@ -134,26 +147,31 @@
           <input type="text" class="form-control" id="comments1">
         </div>
       </div>
-      <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Weight Section</button>
-      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(1)">Save to Sheet</button>
+      <!-- <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Continue to Weight Section</button> -->
+      <button class="btn btn-tertiary" onclick="addCrop()">Add Another Crop</button>
+      <button class="btn btn-secondary" onclick="nextPhase()">Continue to Weight Section</button>
+      <button class="btn btn-primary mt-4" onclick="savePhase(1)">Save to Sheet</button>
     </div>
 
     <!-- Phase 2: Weight Details -->
     <div id="phase-2" class="hidden">
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
-      <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button>
-      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(2)">Save to Sheet</button>
+      <!-- <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button> -->
+      <button class="btn btn-tertiary" onclick="previousPhase()">Back</button>
+      <button class="btn btn-secondary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button>
+      <button class="btn btn-primary mt-4" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
     <!-- Phase 3: Additional Details -->
     <div id="phase-3" class="hidden">
       <h4>Food Transformation & Destination</h4>
       <div id="additional-details-container"></div>
+      <!-- <button class="btn btn-secondary" onclick="previousPhase()">Back</button> -->
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(3)">Save to Sheet</button>
+      <button class="btn btn-primary mt-4" onclick="savePhase(3)">Save to Sheet</button>
     </div>
   </div>
   <script>
