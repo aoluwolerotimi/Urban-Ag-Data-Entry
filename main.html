@@ -143,7 +143,7 @@
         </div>
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-secondary" onclick="removeLastCrop()">Remove Last Crop</button>
+      <!-- <button class="btn btn-secondary" onclick="removeLastCrop()">Remove Last Crop</button> -->
       <button class="btn btn-primary" onclick="nextPhase()">Continue</button>
       <button class="btn btn-primary btn-bold" onclick="savePhase(1)">Save to Sheet</button>
     </div>
@@ -188,21 +188,23 @@
       cropsContainer.appendChild(newCropDiv);
     }
 
-    function removeLastCrop() {
-      if (cropCount > 1) {
-        // Remove the last crop entry from the DOM
-        const cropsContainer = document.getElementById('crops-container');
-        cropsContainer.removeChild(cropsContainer.lastElementChild);
+// Function unstable. When single crop from existing entry present, wipes phase 2 and phase 3 data of the existing entry
+// Even when only one crop. Signifianct data loss risk.
+    // function removeLastCrop() {
+    //   if (cropCount > 1) {
+    //     // Remove the last crop entry from the DOM
+    //     const cropsContainer = document.getElementById('crops-container');
+    //     cropsContainer.removeChild(cropsContainer.lastElementChild);
 
-        // Remove the last crop entry from the harvestData object
-        harvestData.crops.pop();
+    //     // Remove the last crop entry from the harvestData object
+    //     harvestData.crops.pop();
 
-        // Decrement the crop count
-        cropCount--;
-      } else {
-        alert('At least one crop entry is required.');
-      }
-    }
+    //     // Decrement the crop count
+    //     cropCount--;
+    //   } else {
+    //     alert('At least one crop entry is required.');
+    //   }
+    // }
 
     function nextPhase() {
       if (currentPhase === 1) {
