@@ -14,6 +14,11 @@
       color: grey;
       font-style: italic;
     }
+    .required-text {
+      color: #999; /* Light grey color */
+      font-style: italic; /* Italic style */
+      font-size: 0.9rem; /* Slightly smaller font size */
+    }
     body {
       font-size: 1.2rem; 
     }
@@ -96,12 +101,12 @@
     <div id="phase-1">
       <h3>Look Up & Edit Existing Entry</h3>
       <div class="mb-3">
-          <label for="lookup-date" class="form-label">Enter Harvest Date for Search</label>
-          <input type="date" class="form-control" id="lookup-date">
+          <label for="lookup-date" class="form-label">Enter Harvest Date <span class="required-text">(Required for Search)</span></label>
+          <input type="date" class="form-control" id="lookup-date" required>
       </div>
       <div class="mb-3">
-        <label for="lookup-source" class="form-label">Select Source Site for Search</label>
-        <select class="form-control" id="lookup-source">
+        <label for="lookup-source" class="form-label">Select Source Site <span class="required-text">(Required for Search)</span></label>
+        <select class="form-control" id="lookup-source" required>
           <option value="" disabled selected>Select Source Site</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
@@ -114,17 +119,16 @@
           <option value="Versailles">Versailles</option>
           <option value="Unrecorded">Unrecorded</option>
         </select>
-      <!-- <button class="btn btn-primary mt-3" onclick="lookupEntry()">Lookup</button> -->
       <button class="btn btn-secondary mt-3" onclick="lookupEntry()">Lookup</button>
       </div>
       <h2>Start New Entry</h2>
       <h4>Basic Details</h4>
       <div class="mb-3">
-        <label for="harvestdate" class="form-label">Harvest Date*</label>
+        <label for="harvestdate" class="form-label">Harvest Date <span class="required-text">(Required)</span></label>
         <input type="date" class="form-control" id="harvestdate" required>
       </div>
       <div class="mb-3">
-        <label for="source" class="form-label">Source*</label>
+        <label for="source" class="form-label">Source <span class="required-text">(Required)</span></label>
         <select class="form-control" id="source" required>
           <option value="" disabled selected class = "greyed-out">Select Source Site</option>
           <option value="Cabot">Cabot</option>
@@ -141,14 +145,12 @@
       </div>
       <div id="crops-container">
         <div class="crop-entry mb-3">
-          <label for="crop1" class="form-label">Crop 1*</label>
+          <label for="crop1" class="form-label">Crop 1 <span class="required-text">(Required)</span> </label>
           <input type="text" class="form-control" id="crop1" required>
           <label for="comments1" class="form-label">Comments</label>
           <input type="text" class="form-control" id="comments1">
         </div>
       </div>
-      <!-- <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Weight Section</button> -->
       <button class="btn btn-tertiary" onclick="addCrop()">Add Another Crop</button>
       <button class="btn btn-secondary" onclick="nextPhase()">Continue to Weight Section</button>
       <button class="btn btn-primary mt-4" onclick="savePhase(1)">Save to Sheet</button>
@@ -158,8 +160,6 @@
     <div id="phase-2" class="hidden">
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
-      <!-- <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button> -->
       <button class="btn btn-tertiary" onclick="previousPhase()">Back</button>
       <button class="btn btn-secondary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button>
       <button class="btn btn-primary mt-4" onclick="savePhase(2)">Save to Sheet</button>
@@ -169,7 +169,6 @@
     <div id="phase-3" class="hidden">
       <h4>Food Transformation & Destination</h4>
       <div id="additional-details-container"></div>
-      <!-- <button class="btn btn-secondary" onclick="previousPhase()">Back</button> -->
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
       <button class="btn btn-primary mt-4" onclick="savePhase(3)">Save to Sheet</button>
     </div>
