@@ -35,6 +35,19 @@
     background-color: #4E3A75; 
     border-color: #4E3A75;
     }
+    .btn-secondary {
+      background-color: #D3BCE6;
+      border-color: #D3BCE6;
+      color: #000000; 
+    }
+    .btn-secondary:hover {
+      background-color: #C4A5DD;
+      border-color: #C4A5DD;
+    }
+    .btn-secondary:active {
+      background-color: #B492D2;
+      border-color: #B492D2;
+    }
     .btn-bold {
       font-weight: bold;
     }
@@ -122,8 +135,8 @@
         </div>
       </div>
       <button class="btn btn-secondary" onclick="addCrop()">Add Another Crop</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Record Weight</button>
-      <button class="btn btn-primary btn-bold" onclick="savePhase(1)">Save to Sheet</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Continue to Weight Section</button>
+      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(1)">Save to Sheet</button>
     </div>
 
     <!-- Phase 2: Weight Details -->
@@ -131,8 +144,8 @@
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary" onclick="nextPhase()">Record Food Transformation & Destination</button>
-      <button class="btn btn-primary btn-bold" onclick="savePhase(2)">Save to Sheet</button>
+      <button class="btn btn-primary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button>
+      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
     <!-- Phase 3: Additional Details -->
@@ -140,7 +153,7 @@
       <h4>Food Transformation & Destination</h4>
       <div id="additional-details-container"></div>
       <button class="btn btn-secondary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-primary btn-bold" onclick="savePhase(3)">Save to Sheet</button>
+      <button class="btn btn-primary btn-bold mt-4" onclick="savePhase(3)">Save to Sheet</button>
     </div>
   </div>
   <script>
