@@ -107,7 +107,7 @@
       <div class="mb-3">
         <label for="lookup-source" class="form-label">Select Source Site <span class="required-text">(Required for Search)</span></label>
         <select class="form-control" id="lookup-source" required>
-          <option value="" disabled selected>Select Source Site</option>
+          <option value="" disabled selected>Click to Select Source Site</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
           <option value="Concordia">Concordia</option>
@@ -130,7 +130,7 @@
       <div class="mb-3">
         <label for="source" class="form-label">Source <span class="required-text">(Required)</span></label>
         <select class="form-control" id="source" required>
-          <option value="" disabled selected class = "greyed-out">Select Source Site</option>
+          <option value="" disabled selected class = "greyed-out">Click to Select Source Site</option>
           <option value="Cabot">Cabot</option>
           <option value="Cathedrale">Cathedrale</option>
           <option value="Concordia">Concordia</option>
@@ -318,7 +318,7 @@ function collectAllData() {
         detailsDiv.innerHTML = `
           <label for="foodTransformation${cropIndex}" class="form-label">Food Transformation for ${crop.crop}</label>
           <select class="form-control" id="foodTransformation${cropIndex}">
-            <option value="" disabled selected class = "greyed-out">Select Food Transformation</option>
+            <option value="" disabled selected class = "greyed-out">Click to Select Food Transformation</option>
             <option value="None" ${crop.foodTransformation === "None" ? "selected" : ""}>None</option>
             <option value="Catering" ${crop.foodTransformation === "Catering" ? "selected" : ""}>Catering</option>
             <option value="Seed Saving" ${crop.foodTransformation === "Seed Saving" ? "selected" : ""}>Seed Saving</option>
@@ -332,7 +332,7 @@ function collectAllData() {
           </select>
           <label for="destination${cropIndex}" class="form-label">Destination for ${crop.crop}</label>
           <select class="form-control" id="destination${cropIndex}">
-            <option value="" disabled selected class="greyed-out">Select Destination</option>
+            <option value="" disabled selected class="greyed-out">Click to Select Destination</option>
             <option value="Innov. Assistance (IA)" ${crop.destination === "Innov. Assistance (IA)" ? "selected" : ""}>Innov. Assistance (IA)</option>
             <option value="Food Transformation" ${crop.destination === "Food Transformation" ? "selected" : ""}>Food Transformation</option>
             <option value="NWSM" ${crop.destination === "NWSM" ? "selected" : ""}>NWSM</option>
