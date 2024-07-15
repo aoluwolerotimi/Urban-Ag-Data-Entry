@@ -15,9 +15,9 @@
       font-style: italic;
     }
     .required-text {
-      color: #999; /* Light grey color */
-      font-style: italic; /* Italic style */
-      font-size: 0.9rem; /* Slightly smaller font size */
+      color: #999; 
+      font-style: italic; 
+      font-size: 0.9rem; 
     }
     body {
       font-size: 1.2rem; 
@@ -161,7 +161,7 @@
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
       <button class="btn btn-tertiary" onclick="previousPhase()">Back</button>
-      <button class="btn btn-secondary" onclick="nextPhase()">Continue to Food Transfo & Destination Section</button>
+      <button class="btn btn-secondary" onclick="nextPhase()">Continue to Food Transformation & Destination Section</button>
       <button class="btn btn-primary mt-4" onclick="savePhase(2)">Save to Sheet</button>
     </div>
 
@@ -182,6 +182,10 @@
       crops: []
     };
 
+  /**
+   * Function to add a new crop entry to the form.
+   * This increments the crop count and dynamically creates input fields for a new crop.
+   */
     function addCrop() {
       cropCount++;
       const cropsContainer = document.getElementById('crops-container');
@@ -196,6 +200,10 @@
       cropsContainer.appendChild(newCropDiv);
     }
 
+  /**
+   * Function to move to the next phase of the form.
+   * Validates the current phase's required fields before proceeding.
+   */
     function nextPhase() {
       if (currentPhase === 1) {
         const harvestDate = document.getElementById('harvestdate').value;
@@ -227,6 +235,9 @@
       }
     }
 
+  /**
+   * Function to move to the previous phase of the form.
+   */
     function previousPhase() {
       if (currentPhase === 2) {
         showPhase(1);
@@ -235,6 +246,9 @@
       }
     }
 
+  /**
+   * Function to collect data from Phase 1 and store it in the harvestData object.
+   */
     function collectPhase1Data() {
       harvestData.harvestdate = document.getElementById('harvestdate').value;
       harvestData.source = document.getElementById('source').value;
@@ -249,6 +263,9 @@
       renderPhase2();
     }
 
+  /**
+   * Function to collect data from Phase 1 and store it in the harvestData object.
+   */
     function collectPhase2Data() {
       for (let i = 1; i <= cropCount; i++) {
         const weight = document.getElementById(`weight${i}`).value;
@@ -259,6 +276,9 @@
       renderPhase3();
     }
 
+  /**
+   * Function to collect all data from all phases and update the harvestData object.
+   */
 function collectAllData() {
   // Collect data from Phase 1
   harvestData.harvestdate = document.getElementById('harvestdate').value;
@@ -292,7 +312,9 @@ function collectAllData() {
   }
 }
 
-    
+  /**
+   * Function to render Phase 2 with existing data or blank fields if no data exists.
+   */   
     function renderPhase2() {
       const weightsContainer = document.getElementById('weights-container');
       weightsContainer.innerHTML = ''; 
@@ -308,6 +330,9 @@ function collectAllData() {
       }); 
     }
 
+  /**
+   * Function to render Phase 3 with existing data or blank fields if no data exists.
+   */
     function renderPhase3() {
       const additionalDetailsContainer = document.getElementById('additional-details-container');
       additionalDetailsContainer.innerHTML = ''; 
@@ -348,6 +373,10 @@ function collectAllData() {
       });
     }
 
+  /**
+   * Function to show the specified phase of the form and hide the others.
+   * @param {number} phase - The phase number to show.
+   */
     function showPhase(phase) {
       currentPhase = phase;
       document.getElementById('phase-1').classList.toggle('hidden', phase !== 1);
@@ -357,7 +386,9 @@ function collectAllData() {
 
 
 
-// with forced refresh upon saving
+  /**
+   * Function to save the data of the current phase and reload the page to reset the form
+   */
     function savePhase(phase) {
       // Collect all data from all phases
       collectAllData();
@@ -371,7 +402,9 @@ function collectAllData() {
         .saveHarvestData(hgId, harvestData, phase);
     }
 
-
+  /**
+   * Function to look up an existing entry based on harvest date and source
+   */
     function lookupEntry() {
       const lookupDate = document.getElementById('lookup-date').value;
       const lookupSource = document.getElementById('lookup-source').value;
@@ -385,7 +418,9 @@ function collectAllData() {
       google.script.run.withSuccessHandler(populateForm).lookupHarvestData(hgId);
     }
 
-
+  /**
+   * Function to populate the form with data from an existing entry
+   */
     function populateForm(data) {
       if (!data) {
         alert('No entries found for specified Harvest Date and Source Site.');

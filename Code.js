@@ -1,11 +1,23 @@
+/**
+ * This function serves the HTML file 'harvestMain' as a web app.
+ * @return {HtmlOutput} HTML content for the web app.
+ */
 function doGet() {
   return HtmlService.createHtmlOutputFromFile("harvestMain");
 }
 
+/**
+ * This function saves the harvest data to the Google Sheet.
+ * It checks if an entry with the given hgId exists. If it does, the entry is updated; 
+ * otherwise, a new entry is appended.
+ * @param {string} hgId - The Harvest Group ID. This is a concatenation of the harvest date and harvest site
+ * @param {Object} harvestData - The harvest data object containing harvest date, source, and crops.
+ * @param {number} phase - The phase of data collection.
+ */
 function saveHarvestData(hgId, harvestData, phase) {
   let ws = SpreadsheetApp.getActiveSpreadsheet();
   let harvestSS = ws.getSheetByName("Harvest Tracking");
-  let rows = harvestSS.getDataRange().getValues(); // AO necessary to save all rows like this? why not just the hgID column
+  let rows = harvestSS.getDataRange().getValues();
 
   // Check if entry already exists
   let entryRow = -1;
@@ -44,7 +56,12 @@ function saveHarvestData(hgId, harvestData, phase) {
 
 }
 
-// checking only the column first before pulling only the required rows
+/**
+ * This function looks up the harvest data for a given Harvest Group ID (hgId).
+ * It checks only the first column to find the entry row and then pulls only the required rows.
+ * @param {string} hgId - The Harvest Group ID.
+ * @return {Object|null} The harvest data object if found, or null if not found.
+ */
 function lookupHarvestData(hgId) {
   let ws = SpreadsheetApp.getActiveSpreadsheet();
   let harvestSS = ws.getSheetByName("Harvest Tracking");
