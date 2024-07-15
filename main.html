@@ -19,6 +19,12 @@
       font-style: italic; 
       font-size: 0.9rem; 
     }
+    .warning-message {
+      color: red;
+      font-style: italic;
+      margin-top: -10px;
+      font-size: 0.9rem
+    }
     body {
       font-size: 1.2rem; 
     }
@@ -160,7 +166,8 @@
     <div id="phase-2" class="hidden">
       <h4>Weight Details</h4>
       <div id="weights-container"></div>
-      <!-- <button class="btn btn-tertiary" onclick="previousPhase()">Back</button> -->
+      <button class="btn btn-tertiary" onclick="previousPhase()">Go Back</button>
+      <p class="warning-message">Data in current section may need to be re-entered after going back.</p>
       <button class="btn btn-secondary" onclick="nextPhase()">Continue to Food Transformation & Destination Section</button>
       <button class="btn btn-primary mt-4" onclick="savePhase(2)">Save to Sheet</button>
     </div>
@@ -169,7 +176,8 @@
     <div id="phase-3" class="hidden">
       <h4>Food Transformation & Destination</h4>
       <div id="additional-details-container"></div>
-      <!-- <button class="btn btn-secondary" onclick="previousPhase()">Back</button> -->
+      <button class="btn btn-secondary" onclick="previousPhase()">Go Back</button>
+      <p class="warning-message">Data in current section may need to be re-entered after going back.</p>
       <button class="btn btn-primary mt-4" onclick="savePhase(3)">Save to Sheet</button>
     </div>
   </div>
@@ -235,23 +243,16 @@
       }
     }
 
-// Due to unstable behaviour in next phase function
-// Commenting out back button. If you go back and save, 
-// Advance data entered is still there
-// But if you go forward again (clicking next phase) 
-// The data gets wiped
-// Weight data is persistent for some reason. Probably why it didn't show before
-// But for other phases, data getting wiped 
-  // /**
-  //  * Function to move to the previous phase of the form.
-  //  */
-  //   function previousPhase() {
-  //     if (currentPhase === 2) {
-  //       showPhase(1);
-  //     } else if (currentPhase === 3) {
-  //       showPhase(2);
-  //     }
-  //   }
+  /**
+   * Function to move to the previous phase of the form.
+   */
+    function previousPhase() {
+      if (currentPhase === 2) {
+        showPhase(1);
+      } else if (currentPhase === 3) {
+        showPhase(2);
+      }
+    }
 
   /**
    * Function to collect data from Phase 1 and store it in the harvestData object.
